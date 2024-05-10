@@ -1,5 +1,16 @@
  
 # Simple demo for Spring WebFlux framework
+
+## Run it quickly
+```shell
+git clone https://github.com/ericssonxiao/SpringBoot-WebFlux-Exercises.git
+cd spring-webflux-demo
+mvn clean
+mvn install
+mvn spring-boot:run
+curl http://localhost:8080/helloworld
+```
+
 ## How to create this project?
 ![https://start.spring.io/](00.jpg)
 go to `start.spring.io` website, you can type some information about the package name and project name. then click `GENERATE` button to create project.
