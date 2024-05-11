@@ -1,4 +1,5 @@
 package com.eric.demo.dto;
+import java.math.BigInteger;
 import java.util.Set;
 
 import com.eric.demo.models.Note;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class StudentNoteDTO {
-    private Long studentId;
+    private BigInteger studentId;
     private String studentName;
     private String studentEmail;
     private String studentPhone;

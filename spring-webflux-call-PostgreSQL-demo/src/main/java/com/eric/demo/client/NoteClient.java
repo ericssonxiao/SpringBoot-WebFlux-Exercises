@@ -1,5 +1,7 @@
 package com.eric.demo.client;
 
+import java.math.BigInteger;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +18,7 @@ public class NoteClient {
 
     private WebClient client = WebClient.create("http://localhost:8080");
 
-    public Mono<Note> getNote(Long noteId) {
+    public Mono<Note> getNote(BigInteger noteId) {
         return client.get().uri("/notes/{noteId}", noteId)
                 .retrieve().bodyToMono(Note.class)
                 .log("note fetched!");

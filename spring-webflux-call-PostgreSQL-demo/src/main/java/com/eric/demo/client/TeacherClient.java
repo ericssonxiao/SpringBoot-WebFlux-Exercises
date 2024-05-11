@@ -1,5 +1,7 @@
 package com.eric.demo.client;
 
+import java.math.BigInteger;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class TeacherClient {
     private WebClient client = WebClient.create("http://localhost:8080");
 
-    public Mono<Teacher> getTeacher(Long teacherId) {
+    public Mono<Teacher> getTeacher(BigInteger teacherId) {
         return client.get().uri("/teachers/{teacherId}", teacherId).retrieve()
                 .bodyToMono(Teacher.class).log("Teacher fetched!");
     }

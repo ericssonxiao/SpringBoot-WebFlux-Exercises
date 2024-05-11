@@ -1,5 +1,7 @@
 package com.eric.demo.controller;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +31,13 @@ public class NoteController {
     }
 
     @GetMapping("/{noteId}")
-    public Mono<ResponseEntity<Note>> getNoteById(@PathVariable Long noteId){
+    public Mono<ResponseEntity<Note>> getNoteById(@PathVariable BigInteger noteId){
         Mono<Note> note = noteService.findById(noteId);
         return note.map(n -> ResponseEntity.ok(n)).defaultIfEmpty(ResponseEntity.notFound().build());
     }
     
     @PutMapping("/{noteId}")
-    public Mono<ResponseEntity<Note>> updateNoteById(@PathVariable Long noteId, @RequestBody Note note){
+    public Mono<ResponseEntity<Note>> updateNoteById(@PathVariable BigInteger noteId, @RequestBody Note note){
         return noteService.updateNote(noteId, note)
         .map(updatedNote -> ResponseEntity.ok(updatedNote))
         .defaultIfEmpty(ResponseEntity.badRequest().build());

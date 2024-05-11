@@ -1,5 +1,7 @@
 package com.eric.demo.models;
 
+import java.math.BigInteger;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table("teachers")
 public class Teacher {
     @Id
-    private Long teacherId;
+    private BigInteger teacherId;
     private String teacherName;
     private String teacherEmail;
     private String teacherPhone;

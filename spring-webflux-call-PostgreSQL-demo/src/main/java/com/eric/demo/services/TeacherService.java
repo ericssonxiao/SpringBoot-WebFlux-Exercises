@@ -1,14 +1,17 @@
 package com.eric.demo.services;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eric.demo.models.Note;
-import com.eric.demo.models.Student;
 import com.eric.demo.models.Teacher;
 import com.eric.demo.repository.NoteRepository;
-import com.eric.demo.repository.StudentRepository;
 import com.eric.demo.repository.TeacherRepository;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -18,10 +21,7 @@ import reactor.core.publisher.Mono;
 public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
-
-    @Autowired
-    private NoteRepository noteRepository;
-
+    
     public Mono<Teacher> createTeacher(Teacher teacher) {
         return teacherRepository.save(teacher);
     }
@@ -30,11 +30,11 @@ public class TeacherService {
         return teacherRepository.findAll();
     }
 
-    public Mono<Teacher> findById(Long teacherId) {
+    public Mono<Teacher> findById(BigInteger teacherId) {
         return teacherRepository.findById(teacherId);
     }
 
-    public Mono<Teacher> updateTeacher(Long teacherId, Teacher teacher) {
+    public Mono<Teacher> updateTeacher(BigInteger teacherId, Teacher teacher) {
         return teacherRepository.findById(teacherId)
                 .flatMap(dbTeacher -> {
                     dbTeacher.setTeacherName(teacher.getTeacherName());
@@ -44,13 +44,13 @@ public class TeacherService {
                 });
     }
 
-    public Mono<Teacher> deleteTeacher(Long teacherId){
+    public Mono<Teacher> deleteTeacher(BigInteger teacherId) {
         return teacherRepository.findById(teacherId)
-        .flatMap(existingTeacher -> teacherRepository.delete(existingTeacher)
-        .then(Mono.just(existingTeacher)));
+                .flatMap(existingTeacher -> teacherRepository.delete(existingTeacher)
+                        .then(Mono.just(existingTeacher)));
     }
 
-    public Flux<Note> findAllNotesByTeacherId(Long teacherId){
+    public Flux<Note> findAllNotesByTeacherId(BigInteger teacherId) {
         return teacherRepository.getAllNotesByTeacherId(teacherId);
     }
 }

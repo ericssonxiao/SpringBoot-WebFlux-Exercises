@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.util.Set;
 import com.eric.demo.models.Note;
 
@@ -12,7 +13,7 @@ import com.eric.demo.models.Note;
 @NoArgsConstructor
 @Builder
 public class TeacherNoteDTO {
-    private Long teacherId;
+    private BigInteger teacherId;
     private String teacherName;
     private String teacherEmail;
     private String teacherPhone;

@@ -1,5 +1,7 @@
 package com.eric.demo.controller;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eric.demo.client.TeacherClient;
-import com.eric.demo.models.Student;
 import com.eric.demo.models.Teacher;
 
 import reactor.core.publisher.Flux;
@@ -25,7 +26,7 @@ public class TeacherClientController {
     private TeacherClient teacherClient;
 
     @GetMapping("/teacherId")
-    public Mono<ResponseEntity<Teacher>> getTeacherById(@PathVariable Long teacherId) {
+    public Mono<ResponseEntity<Teacher>> getTeacherById(@PathVariable BigInteger teacherId) {
         Mono<Teacher> teacher = teacherClient.getTeacher(teacherId);
         return teacher.map(t -> ResponseEntity.ok(t))
                 .defaultIfEmpty(ResponseEntity.notFound().build());

@@ -1,5 +1,6 @@
 package com.eric.demo.services;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,6 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Autowired
-    private NoteRepository noteRepository;
-
     public Mono<Student> createStudent(Student student) {
         return studentRepository.save(student);
     }
@@ -35,11 +33,11 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Mono<Student> findById(Long studentId) {
+    public Mono<Student> findById(BigInteger studentId) {
         return studentRepository.findById(studentId);
     }
 
-    public Mono<Student> updateStudent(Long studentId, Student student) {
+    public Mono<Student> updateStudent(BigInteger studentId, Student student) {
         return studentRepository.findById(studentId)
                 .flatMap(dbStudent -> {
                     dbStudent.setStudentName(student.getStudentName());
@@ -49,27 +47,21 @@ public class StudentService {
                 });
     }
 
-    public Mono<Student> deleteStudent(Long studentId){
+    public Mono<Student> deleteStudent(BigInteger studentId){
         return studentRepository.findById(studentId)
         .flatMap(existingStudent -> studentRepository.delete(existingStudent)
         .then(Mono.just(existingStudent)));
     }
 
-    public Flux<Note> findAllNotesByStudentId(Long studentId){
+    public Flux<Note> findAllNotesByStudentId(BigInteger studentId){
         return studentRepository.getAllNotesByStudentId(studentId);
     }
 
-    public Flux<Student> fetchStudents(List<Long> studentIds){
-        return Flux.fromIterable(studentIds)
-        .parallel()
-        .runOn(Schedulers.elastic())
-        .flatMap(i -> findById(i))
-        .ordered((s1,s2) -> s2.getStudentId() - s1.getStudentId());
-    }
-
-    
-
-
-
-
+    // public Flux<Student> fetchStudents(List<BigInteger> studentIds){
+    //     return Flux.fromIterable(studentIds)
+    //     .parallel()
+    //     .runOn(Schedulers.boundedElastic())
+    //     .flatMap(i -> findById(i))
+    //     .ordered((s1,s2) -> s2.getStudentId() - s1.getStudentId());
+    // }
 }
